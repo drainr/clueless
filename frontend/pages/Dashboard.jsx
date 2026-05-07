@@ -9,7 +9,6 @@ const Dashboard = () => {
             <div>
                 <Navbar />
             </div>
-            <div className="bg-red-500 m-5">TEST</div>
             <div className="m-5">
                 <Cards />
             </div>
