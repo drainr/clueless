@@ -2,9 +2,9 @@
 @plugin "daisyui";
 
 :root {
-    font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
     color: #2f241f;
-    background: #fffaf3;
+    background: #ffffff;
     font-synthesis: none;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
@@ -15,6 +15,7 @@
     box-sizing: border-box;
 }
 
+html,
 body {
     margin: 0;
     min-width: 320px;
@@ -27,6 +28,6 @@ button {
 }
 
 #root {
-    min-height: 100vh;
     width: 100%;
+    min-height: 100vh;
 }
