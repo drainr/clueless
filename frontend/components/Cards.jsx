@@ -29,11 +29,11 @@ const StyledWrapper = styled.div`
     justify-content: center;
     user-select: none;
     font-weight: bolder;
-    color: black;
+    color: #8c6f61;
   }
 
   .card:hover {
-    border: 1px solid black;
+    border: 1px solid #8c6f61;
     transform: scale(1.05);
   }
 
