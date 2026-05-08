@@ -1,5 +1,6 @@
 import { useState } from "react";
 import RightSideBar from "./RightSideBar.jsx";
+import ClueBoard from "../../pages/OgBoardGame.jsx";
 
 export default function BoardSidebar() {
     const [sidebarWidth, setSidebarWidth] = useState(280);
@@ -55,14 +56,8 @@ export default function BoardSidebar() {
             </aside>
 
             {/* Main Content */}
-            <main className="flex-1 p-6 overflow-auto">
-                <h1 className="text-4xl text-[#583927] font-cormorant font-extrabold">
-                    Main Game Board
-                </h1>
-
-                <div className="mt-6 rounded-2xl bg-white shadow p-6">
-                    The board
-                </div>
+            <main className="flex-1 p-10 overflow-auto">
+                <ClueBoard />
             </main>
             <RightSideBar />
         </div>
