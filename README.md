@@ -2,14 +2,6 @@
 
 A full-stack web-game where guests and registered users can play Clueless. Guests can sign up, view the home page, and create or join a game. Registered users have all the functionality a guest does plus an interactive friendslist and a statistics dashboard of their wins/losses.
 
-## Moore’s Vision Template
-#### FOR fans of Clue
-#### WHO are looking for an online alternative to the board game.
-#### THE product, ClueLess, is a web game 
-#### THAT users can play as a guest or log in to connect with a game room code or link and take turns playing
-#### Unlike the Clue board game, mobile app, or Murdoku game 
-#### Our product is online, free, and combines the cute style of Murdoku with the strategy of Clue.
-
 ## Minimum Viable Product
 Our MVP includes a simple board game (similar to Clue or Murdoku) where users can play as a guest or log in (2 role-based account types), connect with a game room code or link, take turns playing, use a working dice, and have one full gridmap working with associated characters, weapons, and locations.
 
@@ -47,11 +39,12 @@ Example contributions:
 
 ## Moore's Vision Template
 
-BanyanHire connects:
-
-- Job Seekers → search/apply/save jobs
-- Recruiters/Institutions → create/manage job postings
-- Admins → manage users, companies, approvals, and job posting oversight
+#### FOR fans of Clue
+#### WHO are looking for an online alternative to the board game.
+#### THE product, ClueLess, is a web game 
+#### THAT users can play as a guest or log in to connect with a game room code or link and take turns playing
+#### Unlike the Clue board game, mobile app, or Murdoku game 
+#### Our product is online, free, and combines the cute style of Murdoku with the strategy of Clue.
 
 Inspired by:
 - Clue
