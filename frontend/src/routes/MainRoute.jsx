@@ -4,6 +4,7 @@ import { Routes, Route, Navigate } from 'react-router-dom'
 
 import Dashboard from '../pages/Dashboard'
 import BoardSidebar from '../components/BoardSidebar'
+import Rules from '../pages/Rules'
 
 export default function MainRoute() {
   return (
@@ -11,6 +12,7 @@ export default function MainRoute() {
       {/* Public */}
       {/* <Route path="/"         element={<Landing />} /> */}
       <Route path="/dashboard"  element={<Dashboard />} />
+      <Route path="/rules" element={<Rules />} />
       <Route path="/game"     element={<BoardSidebar />} />
       {/* <Route path="/login"    element={<Login />} /> */}
       {/* <Route path="/register" element={<Register />} /> */}

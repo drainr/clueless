@@ -3,7 +3,7 @@ import Navbar from "../components/Navbar";
 
 const Rules = () => {
     return (
-        <div className="min-h-screen bg-[#f5ead8] text-[#4b2e24]">
+        <div className="min-h-screen bg-[#fffaf3] text-[#4b2e24]">
             <Navbar />
 
             <main className="max-w-5xl mx-auto px-6 py-12">
