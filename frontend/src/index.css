@@ -30,3 +30,42 @@ button {
     width: 100%;
     min-height: 100vh;
 }
+@theme {
+    --font-cormorant: "Cormorant Garamond", serif;
+    --font-inter: "Inter", sans-serif;
+    --font-dm: "DM Sans", sans-serif;
+}
+@keyframes diceRoll {
+    0% {
+        transform: rotate(0deg) scale(1);
+    }
+    25% {
+        transform: rotate(120deg) scale(1.25);
+    }
+    50% {
+        transform: rotate(240deg) scale(0.9);
+    }
+    75% {
+        transform: rotate(360deg) scale(1.2);
+    }
+    100% {
+        transform: rotate(720deg) scale(1);
+    }
+}
+
+@keyframes diceStop {
+    0% {
+        transform: scale(1.4);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.animate-diceRoll {
+    animation: diceRoll 0.45s linear infinite;
+}
+
+.animate-diceStop {
+    animation: diceStop 0.25s ease-out;
+}

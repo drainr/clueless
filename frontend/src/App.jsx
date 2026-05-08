@@ -1,12 +1,14 @@
 import './App.css'
-import Dashboard from "../pages/Dashboard.jsx";
+import Dashboard from "../src/pages/Dashboard.jsx";
+import MainRoute from "../src/routes/MainRoute.jsx";
+import BoardSidebar from "../src/components/BoardSidebar.jsx";
 
 function App() {
 
   return (
     <>
         <div>
-      <Dashboard />
+      <BoardSidebar />
         </div>
     </>
   )
