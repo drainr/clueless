@@ -1,0 +1,8 @@
+[
+  { "id": "wpn_001", "name": "Candlestick", "type": "weapon", "murderWeapon": false },
+  { "id": "wpn_002", "name": "Knife", "type": "weapon", "murderWeapon": false },
+  { "id": "wpn_003", "name": "Lead Pipe", "type": "weapon", "murderWeapon": false },
+  { "id": "wpn_004", "name": "Revolver", "type": "weapon", "murderWeapon": false },
+  { "id": "wpn_005", "name": "Rope", "type": "weapon", "murderWeapon": false },
+  { "id": "wpn_006", "name": "Wrench", "type": "weapon", "murderWeapon": false }
+]
