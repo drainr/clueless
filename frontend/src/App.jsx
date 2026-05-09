@@ -1,17 +1,13 @@
 import './App.css'
-import Dashboard from "../src/pages/Dashboard.jsx";
 import MainRoute from "../src/routes/MainRoute.jsx";
-import BoardSidebar from "../src/components/BoardSidebar.jsx";
+import { BrowserRouter } from 'react-router-dom';
 
 function App() {
-
   return (
-    <>
-        <div>
-      <BoardSidebar />
-        </div>
-    </>
-  )
+    <BrowserRouter>
+      <MainRoute />
+    </BrowserRouter>
+  );
 }
 
-export default App
+export default App;
