@@ -17,6 +17,7 @@ export default function MainRoute() {
     <Routes>
       {/* Public */}
       <Route path="/"         element={<LandingPage />} />
+      <Route path="/dev/game" element={<Game />} />
 
       {/* Registered users only */}
       <Route element={<RegisteredRoute />}>
