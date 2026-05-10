@@ -2,11 +2,11 @@ import "./navbar.css";
 import { useNavigate, useLocation } from 'react-router-dom'
 
 const TABS = [
-  { label: 'Boards',      path: '/dashboard' },
-  { label: 'Friends',     path: '/friends' },
-  { label: '',            path: null },
-  { label: 'Leaderboard', path: '/leaderboard' },
-  { label: 'Rules',       path: '/rules' },
+  { label: 'Boards',      path: '/dashboard/boards' },
+  { label: 'Friends',     path: '/dashboard/friends' },
+  { label: 'Leaderboard', path: '/dashboard/leaderboard' },
+  { label: 'Rules',       path: '/dashboard/rules' },
+  { label: 'Profile',        path: '/dashboard/profile' },
 ]
 
 export default function Navbar() {

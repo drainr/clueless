@@ -1,4 +1,5 @@
 import React from 'react';
+import { Outlet } from 'react-router-dom'
 import Navbar from "../components/Navbar.jsx";
 import Cards from "../components/Cards.jsx";
 
@@ -8,9 +9,7 @@ const Dashboard = () => {
         <div>
             <div>
                 <Navbar />
-            </div>
-            <div className="m-5">
-                <Cards />
+                <Outlet />
             </div>
         </div>
     );
