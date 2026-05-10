@@ -9,6 +9,7 @@ import FriendsList from '../pages/FriendsList'
 import Leaderboard from '../pages/Leaderboard'
 import Profile from '../pages/Profile'
 import Rules from '../pages/Rules'
+import LandingPage from '../pages/Landing'
 
 export default function MainRoute() {
   return (
@@ -26,6 +27,7 @@ export default function MainRoute() {
       <Route path="/game"     element={<BoardSidebar />} />
       {/* <Route path="/login"    element={<Login />} /> */}
       {/* <Route path="/register" element={<Register />} /> */}
+      <Route path ="/landing" element={<LandingPage />} />
 
       {/* Catch-all */}
       <Route path="*" element={<Navigate to="/" />} />

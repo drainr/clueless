@@ -13,7 +13,20 @@
 }
 
 .clueless-brand {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+}
+
+.clueless-brand-text {
     text-align: left;
+}
+
+.clueless-logo {
+    height: 40px;
+    width: 40px;
+    object-fit: contain;
 }
 
 .clueless-brand h1 {
