@@ -1,0 +1,18 @@
+player turn:
+
+1: roll dice
+2: Move that player in 4 directions or L shape on grid
+
+3: if player move on room tile enter room:
+
+4 make a suggestion on killer: name suspect, and weapon 
+in the current room the player is in
+move that suspect into that room to investigate that suspect
+
+5: if left player has suggested card, reveal it to current player
+    else left player declare "i dont have"
+
+
+
+next player turn: repeat game loop
+
