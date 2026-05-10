@@ -9,6 +9,7 @@ import FriendsList from '../pages/FriendsList'
 import Leaderboard from '../pages/Leaderboard'
 import Rules from '../pages/Rules'
 import Profile from '../pages/Profile'
+import Lobby from '../pages/Lobby'
 import Game from '../pages/Game'
 
 export default function MainRoute() {
@@ -31,7 +32,8 @@ export default function MainRoute() {
 
       {/* Protected routes (registered + guests) */}
       <Route element={<ProtectedRoute />}>
-        <Route path="/game"     element={<Game />} />
+        <Route path="/lobby/:roomCode" element={<Lobby />} />
+        <Route path="/game/:roomCode"  element={<Game />} />
       </Route>
 
       {/* Catch-all */}
