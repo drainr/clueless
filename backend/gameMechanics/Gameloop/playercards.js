@@ -1,5 +1,6 @@
-//create players and assign them their initial hand of cards
-//and store current location
+// Creates player objects and deals their hands at game start.
+// It builds the initial player list, assigns spawn positions, and then passes the players into the deal-hand helper.
+// Use this when you want a ready-to-play player setup instead of creating players manually.
 
 const { dealPlayerHands } = require('../Deck/DealHand');
 
