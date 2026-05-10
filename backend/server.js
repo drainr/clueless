@@ -9,11 +9,13 @@ app.use(express.json());
 
 const port = process.env.PORT || 3005;
 
-connectDB().then(() => {
-  // register routes after DB is connected
-  app.use("/api/auth",         require("./routes/authRoutes"));
-  app.use("/api/game",         require("./routes/gameRoutes"));
-  app.use("/api/rooms",        require("./routes/roomRoutes"));
-  app.use("/api/user",         require("./routes/userRoutes"));
-  app.listen(port, () => console.log(`Listening on port: ${port}`));
-}).catch(console.error);
+// Register routes immediately - don't wait for DB connection
+app.use("/api/auth",         require("./routes/authRoutes"));
+app.use("/api/game",         require("./routes/gameRoutes"));
+app.use("/api/rooms",        require("./routes/roomRoutes"));
+app.use("/api/user",         require("./routes/userRoutes"));
+
+app.listen(port, () => console.log(`Listening on port: ${port}`));
+
+// Try to connect to DB in background
+connectDB().catch(err => console.error("DB connection failed:", err));

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import RightSideBar from "./RightSideBar.jsx";
-import ClueBoard from "../../pages/OgBoardGame.jsx";
+import ClueBoard from "../pages/Ogboardgame.jsx";
 
 export default function BoardSidebar() {
     const [sidebarWidth, setSidebarWidth] = useState(280);
