@@ -22,6 +22,7 @@ const RightSideBar = () => {
                     <button className="w-full p-3 rounded-xl bg-[#583927] text-white font-semibold">
                         Accuse
                     </button>
+
                 </div>
             </aside>
 

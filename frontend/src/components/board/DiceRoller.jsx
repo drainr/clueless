@@ -11,20 +11,28 @@ export default function DiceRoller() {
     const [result, setResult] = useState(null);
     const [showOverlay, setShowOverlay] = useState(false);
 
-    function rollDice() {
+    async function rollDice() {
         setShowOverlay(true);
         setRolling(true);
         setResult(null);
 
-        setTimeout(() => {
-            const randomNumber = Math.floor(Math.random() * 6) + 1;
-            setResult(randomNumber);
-            setRolling(false);
-        }, 1200);
+        setTimeout(async () => {
+            try {
+                const resp = await fetch('/api/game/test/roll-dice', { method: 'POST' });
+                const data = await resp.json();
 
-        setTimeout(() => {
-            setShowOverlay(false);
-        }, 2200);
+                // show the server-rolled value so the animation matches the move count
+                setResult(data.diceRoll);
+                setRolling(false);
+
+                // dispatch event for board to pick up authoritative move data
+                window.dispatchEvent(new CustomEvent('diceRolled', { detail: data }));
+            } catch (err) {
+                console.error('Failed to roll dice on backend:', err);
+            } finally {
+                setTimeout(() => setShowOverlay(false), 600);
+            }
+        }, 1200);
     }
 
     const diceFaces = {
