@@ -1,10 +1,8 @@
 import React from "react";
-import Navbar from "../components/Navbar";
 
 const Rules = () => {
     return (
         <div className="min-h-screen bg-[#fffaf3] text-[#4b2e24]">
-            <Navbar />
 
             <main className="max-w-5xl mx-auto px-6 py-12">
                 <section className="bg-white/70 rounded-3xl shadow-lg p-8 border border-[#d6c1a8]">
