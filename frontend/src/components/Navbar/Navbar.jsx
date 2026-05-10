@@ -17,7 +17,11 @@ export default function Navbar() {
   return (
     <header className="clueless-navbar">
       <div className="clueless-brand">
-        <img src={logo} alt="Clueless logo" className="clueless-logo" />
+        <img src={logo} 
+        alt="Clueless logo" 
+        className="clueless-logo" 
+        onClick={() => navigate('/')}
+        style={{ cursor: 'pointer' }} />
         <div className="clueless-brand-text">
           <h1>Clueless</h1>
           <p>Murder Mystery Game</p>
