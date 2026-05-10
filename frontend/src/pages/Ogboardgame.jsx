@@ -1,5 +1,3 @@
-frontend\pages\OgBoardGame.jsx
-@@ -0,0 +1,89 @@
 const BOARD_SIZE = 15;
 
 const rooms = [
