@@ -7,6 +7,7 @@ body {
     margin: 0;
     padding: 0;
     overflow-x: hidden;
+    cursor: url('/frontend/public/cursors/loupe1.png') 16 16, auto;
 }
 
 #root {
@@ -16,4 +17,10 @@ body {
     padding: 0;
     text-align: center;
     background-color: #fffaf3;
+}
+
+button{
+    a{
+        cursor: pointer;
+    }
 }

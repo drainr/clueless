@@ -20,10 +20,14 @@ body {
     min-width: 320px;
     min-height: 100vh;
     background: #ffffff;
+    cursor: url('/frontend/public/cursors/loupe1.png') 16 16, auto;
 }
 
 button {
     font-family: inherit;
+    a {
+        cursor: pointer !important;
+    }
 }
 
 #root {

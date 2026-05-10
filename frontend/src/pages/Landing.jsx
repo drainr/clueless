@@ -5,6 +5,7 @@ import '../components/LandingPage/Landing.css';
 import Login from './Login';
 import Register from './Register';
 import logo from '../assets/Clueless_Favicon.png'
+import TextType from "../components/TextType/TextType";
 
 const LandingPage = () => {
     const [showModal, setShowModal] = useState(false);
@@ -48,12 +49,22 @@ const LandingPage = () => {
                 <img src={logo} alt="Clueless" className="landing_logo" />
                 <h1 className="landing_title">Clueless</h1>
                 <p className="landing_description">
-                    Solve the mystery! Who committed the crime, with what weapon, and in which room? 
-                    Use your detective skills to deduce the truth before your opponents do.
+                    <TextType
+                        text={[
+                            "Solve the mystery before your opponents do. Find the suspect, weapon, and room. Enter the mansion and follow the clues."
+                        ]}
+                        typingSpeed={55}
+                        showCursor={true}
+                        cursorCharacter="|"
+                    />
                 </p>
                 <button className="landing_btn" onClick={handlePlayNow}>
                     PLAY NOW
                 </button>
+            </div>
+
+            <div className="h-[1200px] bg-[#ffff]">
+
             </div>
 
             {showModal && (
