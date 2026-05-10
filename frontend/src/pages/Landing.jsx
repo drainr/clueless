@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
-import './Landing.css';
+import '../components/LandingPage/Landing.css';
 import Login from './Login';
 import Register from './Register';
+import logo from '../assets/Clueless_Favicon.png'
 
 const LandingPage = () => {
     const [showModal, setShowModal] = useState(false);
@@ -44,6 +45,7 @@ const LandingPage = () => {
     return (
         <div className="landing_container">
             <div className="landing_content">
+                <img src={logo} alt="Clueless" className="landing_logo" />
                 <h1 className="landing_title">Clueless</h1>
                 <p className="landing_description">
                     Solve the mystery! Who committed the crime, with what weapon, and in which room? 

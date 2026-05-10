@@ -3,7 +3,7 @@ import { Routes, Route, Navigate } from 'react-router-dom'
 // import RegisteredRoute from './RegisteredRoute'
 
 import Dashboard from '../pages/Dashboard'
-import BoardSidebar from '../components/BoardSidebar'
+import BoardSidebar from '../components/board/BoardSidebar'
 import Boards from '../pages/Boards'
 import FriendsList from '../pages/FriendsList'
 import Leaderboard from '../pages/Leaderboard'
@@ -15,7 +15,7 @@ export default function MainRoute() {
   return (
     <Routes>
       {/* Public */}
-      {/* <Route path="/"         element={<Landing />} /> */}
+      <Route path="/"         element={<LandingPage />} />
       <Route path="/dashboard" element={<Dashboard />}>
         <Route index element={<Navigate to="boards" replace />} />
         <Route path="boards"      element={<Boards />} />
@@ -25,9 +25,6 @@ export default function MainRoute() {
         <Route path="profile"     element={<Profile />} />
         </Route>
       <Route path="/game"     element={<BoardSidebar />} />
-      {/* <Route path="/login"    element={<Login />} /> */}
-      {/* <Route path="/register" element={<Register />} /> */}
-      <Route path ="/landing" element={<LandingPage />} />
 
       {/* Catch-all */}
       <Route path="*" element={<Navigate to="/" />} />

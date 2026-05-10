@@ -1,6 +1,6 @@
 import "./navbar.css";
 import { useNavigate, useLocation } from "react-router-dom";
-import logo from "../assets/Clueless_Favicon.png";
+import logo from "../../assets/Clueless_Favicon.png";
 
 const TABS = [
   { label: "Boards", path: "/dashboard/boards" },
