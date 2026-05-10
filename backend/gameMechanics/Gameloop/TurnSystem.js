@@ -125,7 +125,7 @@ function applyMove(gameState, playerId, targetPos) {
   const cell = getCell(gameState.board, targetPos);
 
   player.position = targetPos;
-  player.currentRoom = cell?.type === 'room' ? cell.room : null;
+  player.currentRoom = cell?.type === 'room' || cell?.type === 'door' ? cell.room : null;
   gameState.phase = player.currentRoom ? 'suggest' : 'end';
 
   return gameState;
