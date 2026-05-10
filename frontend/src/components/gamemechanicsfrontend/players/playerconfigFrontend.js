@@ -4,12 +4,14 @@ update backend
 
 */
 
-// Builds the payload from the UI state and posts it to your backend
+// Builds the player setup payload from the UI state and posts it to your backend.
+// This lets the user pick a character before the game starts and sends that selection to the server.
 async function submitPlayers(players) {
   const payload = players.map(p => ({
     id:      p.id,
     name:    p.name.trim(),
-    suspect: p.suspect,
+    character: p.character ?? p.suspect,
+    suspect: p.character ?? p.suspect,
   }));
 
   const res = await fetch('/api/game/setup', {
