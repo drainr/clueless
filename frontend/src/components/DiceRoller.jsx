@@ -22,8 +22,18 @@ export default function DiceRoller() {
             setRolling(false);
         }, 1200);
 
-        setTimeout(() => {
-            setShowOverlay(false);
+        // after the animation, call backend to get reachable tiles and dispatch global event
+        setTimeout(async () => {
+            try {
+                const resp = await fetch('/api/game/test/roll-dice', { method: 'POST' });
+                const data = await resp.json();
+                // dispatch event for board to pick up
+                window.dispatchEvent(new CustomEvent('diceRolled', { detail: data }));
+            } catch (err) {
+                console.error('Failed to roll dice on backend:', err);
+            } finally {
+                setShowOverlay(false);
+            }
         }, 2200);
     }
 

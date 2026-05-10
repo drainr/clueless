@@ -1,5 +1,6 @@
 import React from 'react';
 import DiceRoller from "./DiceRoller.jsx";
+import PlayerMovementTest from "./PlayerMovementTest.jsx";
 
 const RightSideBar = () => {
     return (
@@ -22,6 +23,11 @@ const RightSideBar = () => {
                     <button className="w-full p-3 rounded-xl bg-[#583927] text-white font-semibold">
                         Accuse
                     </button>
+
+                    {/* Player Movement Test */}
+                    <div className="mt-6 pt-4 border-t border-gray-300">
+                        <PlayerMovementTest />
+                    </div>
                 </div>
             </aside>
 
