@@ -44,4 +44,38 @@ const getMe = async (req, res) => {
   res.json(req.user);
 };
 
-module.exports = { register, login, getMe };
+// POST /api/auth/guest
+const guest = async (req, res) => {
+  try {
+    // Generate unique guest username
+    const guestId = Math.random().toString(36).substr(2, 9).toUpperCase();
+    const username = `Guest_${guestId}`;
+
+    // Guest expires in 24 hours
+    const expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000);
+
+    const user = await User.create({
+      username,
+      email: `guest_${guestId}@guest.local`,
+      password: guestId, // Temporary, won't be used
+      isGuest: true,
+      expiresAt,
+      isActive: true,
+    });
+
+    const token = generateToken(user._id);
+    res.status(201).json({
+      token,
+      user: {
+        id: user._id,
+        username: user.username,
+        role: user.role,
+        isGuest: true,
+      },
+    });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+module.exports = { register, login, getMe, guest };

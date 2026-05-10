@@ -56,6 +56,10 @@ const UserSchema = new Schema(
 
     // Soft-delete / ban support for admin use
     isActive: { type: Boolean, default: true },
+
+    // Guest user support
+    isGuest: { type: Boolean, default: false },
+    expiresAt: { type: Date, default: null }, // When guest session expires
   },
   { timestamps: true }
 );
