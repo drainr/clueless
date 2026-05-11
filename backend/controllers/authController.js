@@ -3,6 +3,28 @@ const router = express.Router();
 const jwt = require("jsonwebtoken");
 const User = require("../models/user");
 
+const guestNames = {
+  adjectives: [
+    'Silly', 'Sneaky', 'Clumsy', 'Grumpy', 'Witty', 'Jolly', 'Crafty',
+    'Daring', 'Fuzzy', 'Lucky', 'Quirky', 'Spooky', 'Dizzy', 'Fancy',
+    'Clever', 'Bouncy', 'Sleepy', 'Wobbly', 'Cheeky', 'Jumpy', 'Misty',
+    'Brave', 'Shady', 'Hasty', 'Zippy', 'Nosy', 'Rusty', 'Grouchy'
+  ],
+  animals: [
+    'Armadillo', 'Mongoose', 'Platypus', 'Wombat', 'Narwhal', 'Capybara',
+    'Axolotl', 'Quokka', 'Pangolin', 'Fennec', 'Tapir', 'Binturong',
+    'Meerkat', 'Caracal', 'Okapi', 'Numbat', 'Kinkajou', 'Fossa',
+    'Parakeet', 'Wolverine', 'Porcupine', 'Salamander', 'Chameleon',
+    'Albatross', 'Flamingo', 'Weasel', 'Hedgehog', 'Badger'
+  ]
+}
+
+const generateGuestName = () => {
+  const adj    = guestNames.adjectives[Math.floor(Math.random() * guestNames.adjectives.length)]
+  const animal = guestNames.animals[Math.floor(Math.random() * guestNames.animals.length)]
+  return `${adj} ${animal}`
+}
+
 const generateToken = (id) => {
     return jwt.sign({ id }, 
     process.env.JWT_SECRET, 
@@ -47,35 +69,32 @@ const getMe = async (req, res) => {
 // POST /api/auth/guest
 const guest = async (req, res) => {
   try {
-    // Generate unique guest username
-    const guestId = Math.random().toString(36).substr(2, 9).toUpperCase();
-    const username = `Guest_${guestId}`;
-
-    // Guest expires in 24 hours
-    const expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000);
+    const username  = generateGuestName()
+    const guestId   = Math.random().toString(36).substr(2, 9).toUpperCase()
+    const expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000)
 
     const user = await User.create({
       username,
-      email: `guest_${guestId}@guest.local`,
-      password: guestId, // Temporary, won't be used
-      isGuest: true,
+      email:    `guest_${guestId}@guest.local`,
+      password: guestId,
+      isGuest:  true,
       expiresAt,
       isActive: true,
-    });
+    })
 
-    const token = generateToken(user._id);
+    const token = generateToken(user._id)
     res.status(201).json({
       token,
       user: {
-        id: user._id,
+        id:       user._id,
         username: user.username,
-        role: user.role,
-        isGuest: true,
+        role:     user.role,
+        isGuest:  true,
       },
-    });
+    })
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    res.status(500).json({ message: err.message })
   }
-};
+}
 
 module.exports = { register, login, getMe, guest };

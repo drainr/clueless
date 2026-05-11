@@ -11,19 +11,21 @@ export default function Profile() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    const fetchStats = async () => {
-      try {
-        const res = await api.get(`/user/${user.id}/stats`)
-        setStats(res.data.stats)
-      } catch (err) {
-        console.error('Failed to fetch stats', err)
-      } finally {
-        setLoading(false)
-      }
-    }
+  if (!user?.id) return
+  if (stats) return   // ← don't refetch if already loaded
 
-    if (user?.id) fetchStats()
-  }, [user])
+  const fetchStats = async () => {
+    try {
+      const res = await api.get(`/user/${user.id}/stats`)
+      setStats(res.data.stats)
+    } catch (err) {
+      console.error('Failed to fetch stats', err)
+    } finally {
+      setLoading(false)
+    }
+  }
+  fetchStats()
+}, [user])
 
   const handleLogout = () => {
     logout()
