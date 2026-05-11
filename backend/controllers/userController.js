@@ -1,5 +1,18 @@
 const User = require('../models/user');
 
+// GET /api/users/leaderboard
+const getLeaderboard = async (req, res) => {
+  try {
+    const users = await User.find({ isGuest: false, isActive: true })
+      .select('username stats.gamesWon avatarUrl')
+      .sort({ 'stats.gamesWon': -1 })
+      .limit(20);
+    res.json(users);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
 // GET /api/users/:id/stats
 const getUserStats = async (req, res) => {
   try {
@@ -26,4 +39,4 @@ const updateUser = async (req, res) => {
   }
 };
 
-module.exports = { getUserStats, updateUser };
+module.exports = { getUserStats, updateUser, getLeaderboard };

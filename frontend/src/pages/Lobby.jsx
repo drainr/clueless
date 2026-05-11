@@ -16,7 +16,7 @@ export default function Lobby() {
     (p) => p.displayName === user?.username
   )?.isHost
 
-  // Load room + join socket room
+  // Load room on mount
   useEffect(() => {
     const loadRoom = async () => {
       try {
@@ -29,13 +29,37 @@ export default function Lobby() {
     loadRoom()
   }, [roomCode])
 
+  // Socket events
   useEffect(() => {
     if (!socket || !user) return
+
+    // Optimistically add self immediately
+    setRoom((prev) => {
+      if (!prev) return prev
+      const already = prev.players.find((p) => p.displayName === user.username)
+      if (already) return prev
+      return {
+        ...prev,
+        players: [...prev.players, { displayName: user.username, isReady: false, isHost: false }],
+      }
+    })
 
     socket.emit('join_room', {
       roomCode,
       displayName: user.username,
+      userId: user.id,
     })
+
+    // Refresh from DB after emitting to get accurate server state
+    const refreshRoom = async () => {
+      try {
+        const res = await roomAPI.getByCode(roomCode)
+        setRoom(res.data)
+      } catch (err) {
+        console.error('Failed to refresh room', err)
+      }
+    }
+    refreshRoom()
 
     socket.on('player_joined', ({ displayName }) => {
       setRoom((prev) => {
@@ -44,7 +68,7 @@ export default function Lobby() {
         if (already) return prev
         return {
           ...prev,
-          players: [...prev.players, { displayName, isReady: false }],
+          players: [...prev.players, { displayName, isReady: false, isHost: false }],
         }
       })
     })
@@ -76,20 +100,29 @@ export default function Lobby() {
       display: 'flex', flexDirection: 'column',
       alignItems: 'center', justifyContent: 'center', gap: '24px'
     }}>
-      <h1 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '2.5rem', color: '#7A5C46', margin: 0 }}>
+      <h1 style={{
+        fontFamily: 'Cormorant Garamond, serif',
+        fontSize: '2.5rem', color: '#7A5C46', margin: 0
+      }}>
         Game Lobby
       </h1>
 
-      {/* Room code display */}
+      {/* Room code */}
       <div style={{
         background: '#fff', border: '2px solid #7A5C46',
         borderRadius: '12px', padding: '20px 40px', textAlign: 'center',
         boxShadow: '3px 3px 0px #D9B86A'
       }}>
-        <p style={{ margin: '0 0 8px', color: '#8c6f61', fontSize: '12px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em' }}>
+        <p style={{
+          margin: '0 0 8px', color: '#8c6f61', fontSize: '12px',
+          fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em'
+        }}>
           Room Code
         </p>
-        <p style={{ margin: 0, fontSize: '2.5rem', fontWeight: 900, color: '#3D2B1F', letterSpacing: '0.2em' }}>
+        <p style={{
+          margin: 0, fontSize: '2.5rem', fontWeight: 900,
+          color: '#3D2B1F', letterSpacing: '0.2em'
+        }}>
           {roomCode}
         </p>
         <button
@@ -109,26 +142,30 @@ export default function Lobby() {
         background: '#fff', border: '2px solid #7A5C46', borderRadius: '12px',
         padding: '20px', minWidth: '300px', boxShadow: '3px 3px 0px #D9B86A'
       }}>
-        <p style={{ margin: '0 0 12px', fontWeight: 700, color: '#7A5C46', textTransform: 'uppercase', fontSize: '12px', letterSpacing: '0.08em' }}>
+        <p style={{
+          margin: '0 0 12px', fontWeight: 700, color: '#7A5C46',
+          textTransform: 'uppercase', fontSize: '12px', letterSpacing: '0.08em'
+        }}>
           Players ({room.players?.length ?? 0}/{room.maxPlayers})
         </p>
         {room.players?.map((p, i) => (
           <div key={i} style={{
             display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-            padding: '8px 0', borderBottom: i < room.players.length - 1 ? '1px solid #e8d9c8' : 'none'
+            padding: '8px 0',
+            borderBottom: i < room.players.length - 1 ? '1px solid #e8d9c8' : 'none'
           }}>
             <span style={{ fontWeight: 600, color: '#3D2B1F' }}>
               {p.displayName} {p.isHost && '👑'}
             </span>
             <span style={{ fontSize: '12px', color: '#8c6f61' }}>
-              {p.displayName === user?.username ? 'You' : 'Waiting...'}
+              {p.displayName === user?.username ? 'You' : 'Joined'}
             </span>
           </div>
         ))}
       </div>
 
       {/* Start button — host only */}
-      {isHost && (
+      {isHost ? (
         <button
           onClick={handleStartGame}
           disabled={room.players?.length < 2}
@@ -142,9 +179,7 @@ export default function Lobby() {
         >
           Start Game
         </button>
-      )}
-
-      {!isHost && (
+      ) : (
         <p style={{ color: '#8c6f61', fontWeight: 600 }}>
           Waiting for host to start the game...
         </p>
