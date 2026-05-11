@@ -13,9 +13,9 @@ import mustard from "../assets/classic/characters/colonel-mustard.png";
 import plum from "../assets/classic/characters/professor-plum.png";
 
 import knife from "../assets/classic/weapons/knife.png";
-import rope from "../assets/classic/weapons/suicide.png";
 import candlestick from "../assets/classic/weapons/candle.png";
 import revolver from "../assets/classic/weapons/revolver.png";
+import Footer from "../components/Footer/Footer.jsx";
 
 const LandingPage = () => {
     const [showModal, setShowModal] = useState(false);
@@ -320,24 +320,8 @@ const LandingPage = () => {
                     </div>
                 </motion.section>
 
-                <motion.section
-                    className="landing_final_cta"
-                    variants={fadeUp}
-                >
-                    <h2>Ready to solve the case?</h2>
-
-                    <motion.button
-                        className="landing_btn"
-                        onClick={handlePlayNow}
-                        whileHover={{ y: -3, scale: 1.03 }}
-                        whileTap={{ y: 3, scale: 0.98 }}
-                    >
-                        START THE MYSTERY
-                    </motion.button>
-                </motion.section>
-
             </motion.div>
-
+<Footer />
             {showModal && (
                 <div className="modal_overlay" onClick={handleCloseModal}>
                     <div className="modal_content" onClick={(e) => e.stopPropagation()}>
