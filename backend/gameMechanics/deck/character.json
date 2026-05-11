@@ -1,8 +1,8 @@
 [
-  { "id": "chr_001", "name": "Miss Scarlett", "type": "character", "isKiller": false },
-  { "id": "chr_002", "name": "Colonel Mustard", "type": "character", "isKiller": false },
-  { "id": "chr_003", "name": "Mrs. White", "type": "character", "isKiller": false },
-  { "id": "chr_004", "name": "Reverend Green", "type": "character", "isKiller": false },
-  { "id": "chr_005", "name": "Mrs. Peacock", "type": "character", "isKiller": false },
-  { "id": "chr_006", "name": "Professor Plum", "type": "character", "isKiller": false }
+  { "id": "chr_001", "name": "Miss Scarlett", "type": "character", "isKiller": false, "image": "/src/assets/classic/characters/miss-scarlett.png" },
+  { "id": "chr_002", "name": "Colonel Mustard", "type": "character", "isKiller": false, "image": "/src/assets/classic/characters/colonel-mustard.png" },
+  { "id": "chr_003", "name": "Mrs. White", "type": "character", "isKiller": false, "image": "/src/assets/classic/characters/mrs-white.png" },
+  { "id": "chr_004", "name": "Reverend Green", "type": "character", "isKiller": false, "image": "/src/assets/classic/characters/reverend-green.png" },
+  { "id": "chr_005", "name": "Mrs. Peacock", "type": "character", "isKiller": false, "image": "/src/assets/classic/characters/mrs-peacock.png" },
+  { "id": "chr_006", "name": "Professor Plum", "type": "character", "isKiller": false, "image": "/src/assets/classic/characters/professor-plum.png" }
 ]
