@@ -6,7 +6,7 @@
   background: linear-gradient(135deg, #3D2B1F 0%, #7A5C46 100%);
   flex-direction: column;
   text-align: center;
-  padding: 20px;
+    padding-top: 80px;
 }
 
 .landing_content {
@@ -16,6 +16,7 @@
   justify-content: center;
   gap: 30px;
   max-width: 600px;
+    padding-bottom: 120px;
 }
 
 .landing_logo {
@@ -127,4 +128,186 @@
 .guest_button:focus {
   transform: translateY(2px);
   box-shadow: 1px 1px 0px 0px #D9B86A;
+}
+.landing_scroll_content {
+    width: 100%;
+    padding: 80px 20px;
+    background: #F5E8D3;
+}
+
+.landing_story_section {
+    max-width: 850px;
+    margin: 0 auto 70px;
+    padding: 45px;
+    background: #fffdf8;
+    border: 2px solid #7A5C46;
+    border-radius: 25px;
+    box-shadow: 5px 6px 0px 1px #D9B86A;
+    text-align: center;
+}
+
+.landing_small_title {
+    color: #A44A3F;
+    font-weight: 900;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-size: 13px;
+    margin-bottom: 10px;
+}
+
+.landing_story_section h2,
+.landing_showcase_text h2,
+.landing_final_cta h2 {
+    color: #7A5C46;
+    font-size: 2.3rem;
+    font-weight: 900;
+    margin-bottom: 15px;
+    font-family: "Cormorant Garamond", serif;
+}
+
+.landing_story_section p,
+.landing_showcase_text p {
+    color: #3D2B1F;
+    font-size: 1.05rem;
+    line-height: 1.7;
+}
+
+.landing_rules_grid {
+    max-width: 1000px;
+    margin: 0 auto 90px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+}
+
+.landing_rule_card {
+    background: #fffdf8;
+    border: 2px solid #7A5C46;
+    border-radius: 22px;
+    padding: 30px 20px;
+    text-align: center;
+    box-shadow: 4px 5px 0px 1px #D9B86A;
+    transition: all 0.2s ease;
+}
+
+.landing_rule_card:hover {
+    transform: translateY(-5px);
+}
+
+.landing_rule_card span {
+    font-size: 38px;
+    display: block;
+    margin-bottom: 12px;
+}
+
+.landing_rule_card h3 {
+    color: #7A5C46;
+    font-size: 1.5rem;
+    font-weight: 900;
+    margin-bottom: 8px;
+}
+
+.landing_rule_card p {
+    color: #3D2B1F;
+    line-height: 1.5;
+}
+
+.landing_showcase {
+    max-width: 1100px;
+    margin: 0 auto 90px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 45px;
+    align-items: center;
+}
+
+.landing_showcase_text {
+    background: #fffdf8;
+    border: 2px solid #7A5C46;
+    border-radius: 25px;
+    padding: 40px;
+    box-shadow: 5px 6px 0px 1px #D9B86A;
+}
+
+.landing_image_row {
+    display: flex;
+    gap: 18px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.landing_image_row img {
+    width: 145px;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 18px;
+    border: 2px solid #7A5C46;
+    background: #fffdf8;
+    box-shadow: 4px 5px 0px 1px #D9B86A;
+}
+
+.landing_final_cta {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 50px 30px;
+    background: linear-gradient(135deg, #3D2B1F 0%, #7A5C46 100%);
+    border-radius: 28px;
+    border: 2px solid #7A5C46;
+    box-shadow: 5px 6px 0px 1px #D9B86A;
+    text-align: center;
+}
+
+.landing_final_cta h2 {
+    color: #F5E8D3;
+}
+
+@media (max-width: 850px) {
+    .landing_rules_grid,
+    .landing_showcase {
+        grid-template-columns: 1fr;
+    }
+
+    .landing_showcase.reverse .landing_image_row {
+        order: 2;
+    }
+
+    .landing_showcase.reverse .landing_showcase_text {
+        order: 1;
+    }
+
+    .landing_story_section h2,
+    .landing_showcase_text h2,
+    .landing_final_cta h2 {
+        font-size: 1.8rem;
+    }
+    .weapon_card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background: #fffdf8;
+        padding: 14px;
+        border-radius: 18px;
+        border: 2px solid #7A5C46;
+        box-shadow: 4px 5px 0px 1px #D9B86A;
+        transition:
+                transform 0.2s ease,
+                box-shadow 0.2s ease,
+                background 0.2s ease;
+    }
+
+    .weapon_card:hover {
+        background: #fffaf0;
+        box-shadow: 6px 8px 0px 1px #D9B86A;
+    }
+
+    .weapon_card img {
+        width: 90px;
+        height: 90px;
+        object-fit: contain;
+        border: none;
+        box-shadow: none;
+        background: transparent;
+        padding: 25px;
+        margin: 10px;
+    }
 }
