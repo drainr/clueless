@@ -1,33 +1,41 @@
 import { Routes, Route, Navigate } from 'react-router-dom'
-// import ProtectedRoute from './ProtectedRoute'
-// import RegisteredRoute from './RegisteredRoute'
+import ProtectedRoute from './ProtectedRoute'
+import RegisteredRoute from './RegisteredRoute'
 
+import LandingPage from '../pages/Landing'
 import Dashboard from '../pages/Dashboard'
-import BoardSidebar from '../components/BoardSidebar'
 import Boards from '../pages/Boards'
 import FriendsList from '../pages/FriendsList'
 import Leaderboard from '../pages/Leaderboard'
-import Profile from '../pages/Profile'
 import Rules from '../pages/Rules'
-import LandingPage from '../pages/Landing'
+import Profile from '../pages/Profile'
+import Lobby from '../pages/Lobby'
+import Game from '../pages/Game'
 
 export default function MainRoute() {
   return (
     <Routes>
       {/* Public */}
-      {/* <Route path="/"         element={<Landing />} /> */}
-      <Route path="/dashboard" element={<Dashboard />}>
-        <Route index element={<Navigate to="boards" replace />} />
-        <Route path="boards"      element={<Boards />} />
-        <Route path="friends"     element={<FriendsList />} />
-        <Route path="leaderboard" element={<Leaderboard />} />
+      <Route path="/"         element={<LandingPage />} />
+      <Route path="/dev/game" element={<Game />} />
+
+      {/* Registered users only */}
+      <Route element={<RegisteredRoute />}>
+        <Route path="/dashboard" element={<Dashboard />}>
+          <Route index element={<Navigate to="boards" replace />} />
+          <Route path="boards"      element={<Boards />} />
+          <Route path="friends"     element={<FriendsList />} />
+          <Route path="leaderboard" element={<Leaderboard />} />
         <Route path="rules"       element={<Rules />} />
         <Route path="profile"     element={<Profile />} />
         </Route>
-      <Route path="/game"     element={<BoardSidebar />} />
-      {/* <Route path="/login"    element={<Login />} /> */}
-      {/* <Route path="/register" element={<Register />} /> */}
-      <Route path ="/landing" element={<LandingPage />} />
+      </Route>
+
+      {/* Protected routes (registered + guests) */}
+      <Route element={<ProtectedRoute />}>
+        <Route path="/lobby/:roomCode" element={<Lobby />} />
+        <Route path="/game/:roomCode"  element={<Game />} />
+      </Route>
 
       {/* Catch-all */}
       <Route path="*" element={<Navigate to="/" />} />

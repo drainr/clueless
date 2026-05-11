@@ -3,7 +3,7 @@
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  background: linear-gradient(135deg, #264143 0%, #3d5a5f 100%);
+  background: linear-gradient(135deg, #3D2B1F 0%, #7A5C46 100%);
   flex-direction: column;
   text-align: center;
   padding: 20px;
@@ -18,30 +18,38 @@
   max-width: 600px;
 }
 
+.landing_logo {
+  height: 200px;
+  width: 200px;
+  object-fit: contain;
+}
+
 .landing_title {
-  color: #EDDCD9;
+  color: #F5E8D3;
   font-size: 3.5em;
   font-weight: 900;
   margin: 0;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  font-family: "Cormorant Garamond", serif;
 }
 
 .landing_description {
-  color: #EDDCD9;
+  color: #F5E8D3;
   font-size: 1.2em;
   line-height: 1.6;
   margin: 0;
+  opacity: 0.9;
 }
 
 .landing_btn {
   padding: 18px 50px;
   font-size: 1.2em;
-  background: #DE5499;
-  color: white;
+  background: #A44A3F;
+  color: #F5E8D3;
   border: none;
   border-radius: 10px;
   font-weight: 800;
-  box-shadow: 4px 4px 0px 0px #E99F4C;
+  box-shadow: 4px 4px 0px 0px #D9B86A;
   cursor: pointer;
   transition: all 0.2s ease;
 }
@@ -53,10 +61,9 @@
 
 .landing_btn:focus {
   transform: translateY(4px);
-  box-shadow: 1px 2px 0px 0px #E99F4C;
+  box-shadow: 1px 2px 0px 0px #D9B86A;
 }
 
-/* Modal Styles */
 .modal_overlay {
   position: fixed;
   top: 0;
@@ -78,14 +85,8 @@
 }
 
 @keyframes slideIn {
-  from {
-    transform: translateY(-50px);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
+  from { transform: translateY(-50px); opacity: 0; }
+  to   { transform: translateY(0);     opacity: 1; }
 }
 
 .modal_close {
@@ -96,32 +97,34 @@
   border: none;
   font-size: 28px;
   cursor: pointer;
-  color: #264143;
+  color: #7A5C46;
   font-weight: bold;
 }
 
 .modal_close:hover {
-  color: #DE5499;
+  color: #A44A3F;
 }
 
 .guest_button {
   margin-top: 15px;
   padding: 12px 30px;
   font-size: 14px;
-  background: #264143;
-  color: white;
+  background: #7A5C46;
+  color: #F5E8D3;
   border: none;
   border-radius: 8px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
   width: 100%;
+  box-shadow: 2px 2px 0px 0px #D9B86A;
 }
 
 .guest_button:hover {
-  background: #1a2d30;
+  background: #5C4534;
 }
 
 .guest_button:focus {
-  background: #1a2d30;
+  transform: translateY(2px);
+  box-shadow: 1px 1px 0px 0px #D9B86A;
 }

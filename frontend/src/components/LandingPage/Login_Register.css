@@ -12,16 +12,16 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  background-color: #EDDCD9;
+  background-color: #F5E8D3;
   height: auto;
   width: auto;
-  border: 2px solid #264143;
+  border: 2px solid #7A5C46;
   border-radius: 20px;
-  box-shadow: 3px 4px 0px 1px #E99F4C;
+  box-shadow: 3px 4px 0px 1px #D9B86A;
 }
 
 .title {
-  color: #264143;
+  color: #7A5C46;
   font-weight: 900;
   font-size: 1.5em;
   margin-top: 20px;
@@ -29,6 +29,7 @@
 
 .sub_title {
   font-weight: 600;
+  color: #7A5C46;
   margin: 5px 0;
 }
 
@@ -41,17 +42,19 @@
 
 .form_style {
   outline: none;
-  border: 2px solid #264143;
-  box-shadow: 3px 4px 0px 1px #E99F4C;
+  border: 2px solid #7A5C46;
+  box-shadow: 3px 4px 0px 1px #D9B86A;
   width: 290px;
   padding: 12px 10px;
   border-radius: 4px;
   font-size: 15px;
+  background: #fffdf8;
+  color: #3D2B1F;
 }
 
 .form_style:focus, .btn:focus {
   transform: translateY(4px);
-  box-shadow: 1px 2px 0px 0px #E99F4C;
+  box-shadow: 1px 2px 0px 0px #D9B86A;
 }
 
 .btn {
@@ -59,19 +62,27 @@
   margin: 25px 0px;
   width: 290px;
   font-size: 15px;
-  background: #DE5499;
+  background: #A44A3F;
+  color: #F5E8D3;
+  border: none;
   border-radius: 10px;
   font-weight: 800;
-  box-shadow: 3px 3px 0px 0px #E99F4C;
+  box-shadow: 3px 3px 0px 0px #D9B86A;
+  cursor: pointer;
 }
 
 .btn:hover {
-  opacity: .9;
+  opacity: 0.9;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
 .link {
   font-weight: 800;
-  color: #264143;
+  color: #7A5C46;
   padding: 5px;
   background: none;
   border: none;
@@ -80,7 +91,7 @@
 }
 
 .link:hover {
-  opacity: 0.8;
+  color: #A44A3F;
 }
 
 .guest_button {
@@ -88,24 +99,24 @@
   padding: 12px 30px;
   width: 290px;
   font-size: 15px;
-  background: #264143;
-  color: white; 
+  background: #7A5C46;
+  color: #F5E8D3;
   border: none;
   border-radius: 8px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
-  box-shadow: 2px 2px 0px 0px #E99F4C;
+  box-shadow: 2px 2px 0px 0px #D9B86A;
 }
 
 .guest_button:hover {
-  background: #1a2d30;
+  background: #5C4534;
   opacity: 0.9;
 }
 
 .guest_button:focus {
   transform: translateY(2px);
-  box-shadow: 1px 1px 0px 0px #E99F4C;
+  box-shadow: 1px 1px 0px 0px #D9B86A;
 }
 
 .guest_button:disabled {
@@ -113,30 +124,15 @@
   cursor: not-allowed;
 }
 
-.btn:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
-
 .error_message {
-  color: #d32f2f;
-  background-color: #ffebee;
+  color: #A44A3F;
+  background-color: #fdf0ee;
   padding: 12px;
   border-radius: 4px;
   margin: 15px 10px 10px;
-  border-left: 4px solid #d32f2f;
+  border-left: 4px solid #A44A3F;
   font-weight: 600;
   text-align: left;
   max-width: 290px;
   box-sizing: border-box;
-}
-
-.guest_button:hover {
-  background: #1a2d30;
-  opacity: 0.9;
-}
-
-.guest_button:focus {
-  transform: translateY(2px);
-  box-shadow: 1px 1px 0px 0px #E99F4C;
 }

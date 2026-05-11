@@ -30,4 +30,11 @@ export const authAPI = {
     api.get('/auth/me'),
 };
 
+export const roomAPI = {
+  create: (displayName, socketId) =>
+    api.post('/rooms', { displayName, socketId }),
+  getByCode: (code) =>
+    api.get(`/rooms/${code}`),
+};
+
 export default api;

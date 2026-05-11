@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useAuth } from '../hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
-import './Login_Register.css';
+import '../components/LandingPage/Login_Register.css';
 
 const Register = ({ onSwitch, onGuestClick }) => {
     const [username, setUsername] = useState('');
