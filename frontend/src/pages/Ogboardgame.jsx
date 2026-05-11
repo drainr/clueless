@@ -1,5 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import boardData from '../../shared/boardLayout.json';
+import mrsWhiteImg from '../assets/classic/characters/mrs-white.png';
+
 
 const { BOARD_SIZE, ROOMS: rooms } = boardData;
 
@@ -166,7 +168,7 @@ export default function ClueBoard({ tileSize = 38 }) {
                     )}
                     {isPlayerHere && (
                         <div className="absolute inset-0 flex items-center justify-center">
-                            <div className="w-6 h-6 bg-green-500 rounded border-2 border-green-700"></div>
+                            <img src={mrsWhiteImg} alt="Mrs. White" className="w-8 h-8 rounded-full border-2 border-gray-400" />
                         </div>
                     )}
                     {isReachable && !isPlayerHere && (
@@ -196,7 +198,7 @@ export default function ClueBoard({ tileSize = 38 }) {
                 )}
                 {isPlayerHere && (
                     <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="w-6 h-6 bg-green-500 rounded border-2 border-green-700"></div>
+                        <img src={mrsWhiteImg} alt="Mrs. White" className="w-8 h-8 rounded-full border-2 border-gray-400" />
                     </div>
                 )}
                 {isReachable && !isPlayerHere && (

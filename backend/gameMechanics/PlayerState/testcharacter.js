@@ -125,7 +125,7 @@ module.exports = TestCharacter;
 if (require.main === module) {
   console.log('🎮 Clue Board - Player Movement Test\n');
 
-  const player = new TestCharacter('Alice', 5, 7);  // Start at the door of Accusation Room
+  const player = new TestCharacter('Mrs. White', 5, 7);  // Start at the door of Accusation Room
   console.log(`Starting position: ${player.getStatus().position.row}, ${player.getStatus().position.col} (Door)\n`);
 
   // Simulate 5 moves
