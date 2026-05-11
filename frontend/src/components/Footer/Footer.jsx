@@ -4,7 +4,7 @@ import logo from '../../assets/Clueless_Favicon.png';
 const Footer = () => {
     return (
         <div className="w-full">
-            <footer className="footer footer-horizontal w-full bg-base-200 text-base-content px-10 py-14">
+            <footer className="footer footer-horizontal w-full bg-base-200 text-base-content px-10 py-14 border-t border-[#7A5C46]">
                 <aside>
                     <img
                         src={logo}
