@@ -10,10 +10,12 @@ class PlayerMovement {
 
   /**
    * Get valid adjacent tiles from current position
+   * Respects door requirement: must step on door to enter/exit rooms
    * @returns {Array} Array of valid adjacent positions
    */
   getValidMoves() {
     const { row, col } = this.position;
+    const currentTile = this.board[row][col];
     const validMoves = [];
     const directions = [
       { row: -1, col: 0 }, // up
@@ -28,8 +30,10 @@ class PlayerMovement {
 
       if (newRow >= 0 && newRow < this.BOARD_SIZE && newCol >= 0 && newCol < this.BOARD_SIZE) {
         const tile = this.board[newRow][newCol];
-        // Can move to hallway or door tiles
-        if (tile.type === 'hallway' || tile.type === 'door') {
+        
+        // Check if this move respects door transition rules
+        const validation = this.validateRoomTransition(currentTile, tile);
+        if (validation.valid) {
           validMoves.push({ row: newRow, col: newCol });
         }
       }
@@ -111,6 +115,39 @@ class PlayerMovement {
   }
 
   /**
+   * Validate if a move from current position to target is allowed
+   * Players must step on door tiles to enter/exit rooms
+   * @param {Object} currentTile - Current tile object
+   * @param {Object} targetTile - Target tile object
+   * @returns {Object} { valid: boolean, message: string }
+   */
+  validateRoomTransition(currentTile, targetTile) {
+    // Moving from hallway to room interior: not allowed directly (must go through door)
+    if (currentTile.type === 'hallway' && targetTile.type === 'room') {
+      return { valid: false, message: 'Must step on door tile first to enter room' };
+    }
+
+    // Moving from room interior to hallway: not allowed directly (must go through door)
+    if (currentTile.type === 'room' && targetTile.type === 'hallway') {
+      return { valid: false, message: 'Must step on door tile first to exit room' };
+    }
+
+    // Moving from one room to a different room: not allowed (must go through door)
+    if (currentTile.type === 'room' && targetTile.type === 'room' && currentTile.room !== targetTile.room) {
+      return { valid: false, message: 'Cannot move between rooms directly; must exit through door' };
+    }
+
+    // All other moves are allowed:
+    // - Hallway to hallway (normal movement)
+    // - Hallway to door (entering from hallway)
+    // - Door to hallway (exiting to hallway)
+    // - Door to room (entering room through door)
+    // - Room to door (exiting room through door)
+    // - Room to room within same room (interior movement)
+    return { valid: true };
+  }
+
+  /**
    * Move player to a new position (validated)
    * @param {number} newRow - Target row
    * @param {number} newCol - Target column
@@ -121,14 +158,22 @@ class PlayerMovement {
       return { success: false, message: 'Position out of bounds' };
     }
 
-    const tile = this.board[newRow][newCol];
-    // Allow entering rooms, doors, and hallways — all tiles are walkable
+    const currentTile = this.board[this.position.row][this.position.col];
+    const targetTile = this.board[newRow][newCol];
+
+    // Validate room transition rules
+    const validation = this.validateRoomTransition(currentTile, targetTile);
+    if (!validation.valid) {
+      return { success: false, message: validation.message };
+    }
+
+    // Move is valid, update position
     this.position = { row: newRow, col: newCol };
     return {
       success: true,
       message: 'Moved successfully',
       position: this.position,
-      tileInfo: tile,
+      tileInfo: targetTile,
     };
   }
 
