@@ -1,75 +1,74 @@
 import { useState } from "react";
-import { GiInvertedDice1 } from "react-icons/gi";
-import { GiInvertedDice2 } from "react-icons/gi";
-import { GiInvertedDice3 } from "react-icons/gi";
-import { GiInvertedDice4 } from "react-icons/gi";
-import { GiInvertedDice5 } from "react-icons/gi";
-import { GiInvertedDice6 } from "react-icons/gi";
+import { useSocket } from "../../hooks/useSocket";
+import { useParams } from "react-router-dom";
+import { GiInvertedDice1, GiInvertedDice2, GiInvertedDice3,
+         GiInvertedDice4, GiInvertedDice5, GiInvertedDice6 } from "react-icons/gi";
 
-export default function DiceRoller() {
-    const [rolling, setRolling] = useState(false);
-    const [result, setResult] = useState(null);
-    const [showOverlay, setShowOverlay] = useState(false);
+const diceFaces = {
+  1: <GiInvertedDice1 />,
+  2: <GiInvertedDice2 />,
+  3: <GiInvertedDice3 />,
+  4: <GiInvertedDice4 />,
+  5: <GiInvertedDice5 />,
+  6: <GiInvertedDice6 />,
+};
 
-    async function rollDice() {
-        setShowOverlay(true);
-        setRolling(true);
-        setResult(null);
+export default function DiceRoller({ isMyTurn, turnPhase, onRolled }) {
+  const socket       = useSocket();
+  const { roomCode } = useParams();
+  const [rolling, setRolling]       = useState(false);
+  const [result, setResult]         = useState(null);
+  const [showOverlay, setShowOverlay] = useState(false);
 
-        setTimeout(async () => {
-            try {
-                const resp = await fetch('/api/game/test/roll-dice', { method: 'POST' });
-                const data = await resp.json();
+  const canRoll = isMyTurn && turnPhase === "roll" && !rolling;
 
-                // show the server-rolled value so the animation matches the move count
-                setResult(data.diceRoll);
-                setRolling(false);
+  function handleRoll() {
+    if (!canRoll || !socket) return;
 
-                // dispatch event for board to pick up authoritative move data
-                window.dispatchEvent(new CustomEvent('diceRolled', { detail: data }));
-            } catch (err) {
-                console.error('Failed to roll dice on backend:', err);
-            } finally {
-                setTimeout(() => setShowOverlay(false), 600);
-            }
-        }, 1200);
-    }
+    setShowOverlay(true);
+    setRolling(true);
+    setResult(null);
 
-    const diceFaces = {
-        1: <GiInvertedDice1 />,
-        2: <GiInvertedDice2 />,
-        3: <GiInvertedDice3 />,
-        4: <GiInvertedDice4 />,
-        5: <GiInvertedDice5 />,
-        6: <GiInvertedDice6 />,
-    };
+    // Listen for the server's response
+    socket.once("dice_rolled", ({ die1, die2, roll, reachableTiles }) => {
+      console.log('DiceRoller got dice_rolled:', roll, 'tiles:', reachableTiles?.length)
+      setTimeout(() => {
+        setResult(die1 + die2);
+        setRolling(false);
+        if (onRolled) onRolled({ die1, die2, roll, reachableTiles });
+        setTimeout(() => setShowOverlay(false), 800);
+      }, 1200);
+    });
 
-    return (
-        <>
-            <button
-                onClick={rollDice}
-                className="w-full rounded-xl bg-[#6C8AA6] px-4 py-3 font-bold text-white shadow-lg transition hover:opacity-70 cursor-pointer"
-            >
-                Roll Dice
-            </button>
+    socket.emit("roll_dice", { roomCode });
+  }
 
-            {showOverlay && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70">
-                    <div className="text-center">
-                        <div
-                            className={`text-8xl text-white ${
-                                rolling ? "animate-diceRoll" : "animate-diceStop"
-                            }`}
-                        >
-                            {rolling ? "🎲" : diceFaces[result]}
-                        </div>
+  return (
+    <>
+      <button
+        onClick={handleRoll}
+        disabled={!canRoll}
+        className="w-full rounded-xl px-4 py-3 font-bold text-white shadow-lg transition cursor-pointer"
+        style={{
+          background: canRoll ? "#6C8AA6" : "#b0bec5",
+          opacity: canRoll ? 1 : 0.6,
+        }}
+      >
+        Roll Dice
+      </button>
 
-                        <p className="mt-6 text-2xl font-bold text-white">
-                            {rolling ? "Rolling..." : `You rolled a ${result}!`}
-                        </p>
-                    </div>
-                </div>
-            )}
-        </>
-    );
+      {showOverlay && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70">
+          <div className="text-center">
+            <div className={`text-8xl text-white ${rolling ? "animate-bounce" : ""}`}>
+              {rolling ? "🎲" : diceFaces[result]}
+            </div>
+            <p className="mt-6 text-2xl font-bold text-white">
+              {rolling ? "Rolling..." : `You rolled a ${result}!`}
+            </p>
+          </div>
+        </div>
+      )}
+    </>
+  );
 }
