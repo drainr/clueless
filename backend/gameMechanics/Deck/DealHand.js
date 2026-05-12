@@ -13,8 +13,8 @@ function validatePlayers(players) {
     throw new Error("Minimum 3 players required");
   }
 
-  if (players.length > 4) {
-    throw new Error("Maximum 4 players allowed");
+  if (players.length > 6) {
+    throw new Error("Maximum 6 players allowed");
   }
 }
 
@@ -32,7 +32,8 @@ function dealPlayerHands(players, deck) {
   validatePlayers(players);
 
   // clone + shuffle deck
-  const shuffledDeck = Shuffle([...deck]);
+  const shuffledDeck = [...deck];
+  Shuffle(shuffledDeck);
 
   // initialize players with empty hands
   const updatedPlayers = players.map(p => ({

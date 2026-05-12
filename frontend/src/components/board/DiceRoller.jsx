@@ -48,7 +48,7 @@ export default function DiceRoller() {
         <>
             <button
                 onClick={rollDice}
-                className="w-full rounded-xl bg-[#FAF3E8] px-4 py-3 font-bold text-black shadow-lg transition hover:bg-[#FFFFFF]"
+                className="w-full rounded-xl bg-[#6C8AA6] px-4 py-3 font-bold text-white shadow-lg transition hover:opacity-70 cursor-pointer"
             >
                 Roll Dice
             </button>

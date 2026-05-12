@@ -15,33 +15,19 @@ module.exports = (io) => {
     // ── Join room ────────────────────────────────────────────────────────
     socket.on("join_room", async ({ roomCode, displayName, userId }) => {
       socket.join(roomCode);
-
       try {
         const room = await Room.findOne({ code: roomCode });
         if (!room) return;
-
-        const existing = room.players.find(
-          (p) => p.displayName === displayName,
-        );
+        const existing = room.players.find((p) => p.displayName === displayName);
         if (existing) {
           await Room.findOneAndUpdate(
             { code: roomCode, "players.displayName": displayName },
-            {
-              $set: {
-                "players.$.socketId": socket.id,
-                "players.$.isActive": true,
-              },
-            },
+            { $set: { "players.$.socketId": socket.id, "players.$.isActive": true } }
           );
-          return; // ← exit early, don't emit player_joined
+          return;
         }
-
-        // Atomic: only push if displayName not already in array
         const result = await Room.findOneAndUpdate(
-          {
-            code: roomCode,
-            "players.displayName": { $ne: displayName }, // ← only if not already there
-          },
+          { code: roomCode, "players.displayName": { $ne: displayName } },
           {
             $push: {
               players: {
@@ -54,18 +40,35 @@ module.exports = (io) => {
               },
             },
           },
-          { new: true },
+          { new: true }
         );
-
         if (result) {
-          io.to(roomCode).emit("player_joined", {
-            displayName,
-            socketId: socket.id,
-          });
+          io.to(roomCode).emit("player_joined", { displayName, socketId: socket.id });
         }
-        // if result is null, the condition failed meaning player already exists — do nothing
       } catch (err) {
         console.error("join_room DB error:", err);
+      }
+    });
+
+    // ── Leave room ───────────────────────────────────────────────────────
+    socket.on("leave_room", async ({ roomCode, displayName }) => {
+      socket.leave(roomCode);
+      try {
+        const room = await Room.findOne({ code: roomCode });
+        if (!room) return;
+        const leavingPlayer = room.players.find((p) => p.displayName === displayName);
+        await Room.findOneAndUpdate(
+          { code: roomCode },
+          { $pull: { players: { displayName } } }
+        );
+        if (leavingPlayer?.isHost || room.players.length <= 1) {
+          await Room.findByIdAndUpdate(room._id, { status: "finished" });
+          io.to(roomCode).emit("room_closed", { message: "Host left the lobby" });
+        } else {
+          io.to(roomCode).emit("player_left", { displayName });
+        }
+      } catch (err) {
+        console.error("leave_room error:", err);
       }
     });
 
@@ -79,12 +82,8 @@ module.exports = (io) => {
         if (room.players.length < 3)
           return socket.emit("error", { message: "Need at least 3 players" });
 
-        const {
-          killer,
-          weapon,
-          room: murderRoom,
-          remainingDeck,
-        } = selectMurderCards(characters, weapons, rooms);
+        const { killer, weapon, room: murderRoom, remainingDeck } =
+          selectMurderCards(characters, weapons, rooms);
 
         const playerList = room.players.map((p) => ({
           id: p.socketId,
@@ -129,6 +128,22 @@ module.exports = (io) => {
 
         io.to(roomCode).emit("game_started", { roomCode, gameId: game._id });
 
+        // Send public game state to all players
+        io.to(roomCode).emit("game_state", {
+          gameId: game._id,
+          turnPhase: "roll",
+          currentTurnIndex: 0,
+          players: gamePlayers.map((p) => ({
+            displayName: p.displayName,
+            character: p.character,
+            isHost: room.players.find((r) => r.displayName === p.displayName)?.isHost ?? false,
+            isEliminated: false,
+            isActive: true,
+            position: p.position,
+          })),
+        });
+
+        // Send each player their private hand
         gamePlayers.forEach((p) => {
           io.to(p.socketId).emit("deal_hand", {
             character: p.character,
@@ -143,16 +158,27 @@ module.exports = (io) => {
       }
     });
 
+    // ── Abandon game ─────────────────────────────────────────────────────
+    socket.on("abandon_game", async ({ roomCode }) => {
+      try {
+        const room = await Room.findOne({ code: roomCode });
+        if (!room) return;
+        await Room.findByIdAndUpdate(room._id, { status: "finished" });
+        await Game.findOneAndUpdate(
+          { roomId: room._id },
+          { status: "finished", finishedAt: new Date() }
+        );
+        io.to(roomCode).emit("game_abandoned", { message: "Game ended early" });
+      } catch (err) {
+        console.error("abandon_game error:", err);
+      }
+    });
+
     // ── Dice roll ────────────────────────────────────────────────────────
     socket.on("roll_dice", ({ roomCode, playerId }) => {
       const die1 = Math.ceil(Math.random() * 6);
       const die2 = Math.ceil(Math.random() * 6);
-      io.to(roomCode).emit("dice_rolled", {
-        playerId,
-        die1,
-        die2,
-        roll: die1 + die2,
-      });
+      io.to(roomCode).emit("dice_rolled", { playerId, die1, die2, roll: die1 + die2 });
     });
 
     // ── Move player ──────────────────────────────────────────────────────
@@ -169,10 +195,39 @@ module.exports = (io) => {
     socket.on("disconnect", async () => {
       console.log(`Socket disconnected: ${socket.id}`);
       try {
-        await Room.findOneAndUpdate(
+        const room = await Room.findOneAndUpdate(
           { "players.socketId": socket.id },
           { $set: { "players.$.isActive": false } },
+          { new: true }
         );
+        if (!room) return;
+        const roomCode = room.code;
+        const leavingPlayer = room.players.find((p) => p.socketId === socket.id);
+
+        if (room.status === "in_progress") {
+          const activePlayers = room.players.filter((p) => p.isActive);
+          if (activePlayers.length < 3) {
+            await Room.findByIdAndUpdate(room._id, { status: "finished" });
+            await Game.findOneAndUpdate(
+              { roomId: room._id },
+              { status: "finished", finishedAt: new Date() }
+            );
+            io.to(roomCode).emit("game_abandoned", {
+              message: `${leavingPlayer?.displayName ?? "A player"} left — not enough players to continue.`,
+            });
+          } else {
+            io.to(roomCode).emit("player_left", { displayName: leavingPlayer?.displayName });
+          }
+        }
+
+        if (room.status === "waiting") {
+          if (leavingPlayer?.isHost) {
+            await Room.findByIdAndUpdate(room._id, { status: "finished" });
+            io.to(roomCode).emit("room_closed", { message: "Host disconnected" });
+          } else {
+            io.to(roomCode).emit("player_left", { displayName: leavingPlayer?.displayName });
+          }
+        }
       } catch (err) {
         console.error("disconnect cleanup error:", err);
       }

@@ -37,4 +37,8 @@ export const roomAPI = {
     api.get(`/rooms/${code}`),
 };
 
+export const gameAPI = {
+  getByRoomCode: (roomCode) => api.get(`/rooms/${roomCode}`),
+}
+
 export default api;

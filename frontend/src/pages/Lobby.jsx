@@ -51,8 +51,8 @@ export default function Lobby() {
     // Refresh whenever anyone else joins
     socket.on("player_joined", refreshRoom);
 
-    socket.on("game_started", ({ roomCode }) => {
-      navigate(`/game/${roomCode}`);
+    socket.on("game_started", ({ roomCode: gameRoomCode }) => {
+      navigate(`/game/${gameRoomCode}`);
     });
 
     return () => {
