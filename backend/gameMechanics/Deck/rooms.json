@@ -3,7 +3,7 @@
   { "id": "room_002", "name": "Ballroom", "type": "room", "deathLocation": false },
   { "id": "room_003", "name": "Conservatory", "type": "room", "deathLocation": false },
   { "id": "room_004", "name": "Dining Room", "type": "room", "deathLocation": false },
-  { "id": "room_005", "name": "Billiard Room", "type": "room", "deathLocation": false },
+  { "id": "room_005", "name": "Accusation Room", "type": "room", "deathLocation": false },
   { "id": "room_006", "name": "Library", "type": "room", "deathLocation": false },
   { "id": "room_007", "name": "Lounge", "type": "room", "deathLocation": false },
   { "id": "room_008", "name": "Hall", "type": "room", "deathLocation": false },
