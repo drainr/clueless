@@ -48,9 +48,6 @@ export default function Lobby() {
       }
     };
 
-    // Refresh after emitting join so our own entry shows up
-    refreshRoom();
-
     // Refresh whenever anyone else joins
     socket.on("player_joined", refreshRoom);
 
