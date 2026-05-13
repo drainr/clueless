@@ -12,12 +12,14 @@ import Profile from '../pages/Profile'
 import Lobby from '../pages/Lobby'
 import Game from '../pages/Game'
 
+import NotFound    from '../pages/NotFound'
+import Unauthorized from '../pages/Unauthorized'
+
 export default function MainRoute() {
   return (
     <Routes>
       {/* Public */}
       <Route path="/"         element={<LandingPage />} />
-      <Route path="/dev/game" element={<Game />} />
 
       {/* Registered users only */}
       <Route element={<RegisteredRoute />}>
@@ -37,8 +39,9 @@ export default function MainRoute() {
         <Route path="/game/:roomCode"  element={<Game />} />
       </Route>
 
-      {/* Catch-all */}
-      <Route path="*" element={<Navigate to="/" />} />
+      {/* 404 & 401 Errors */}
+      <Route path="/unauthorized" element={<Unauthorized />} />
+      <Route path="*"             element={<NotFound />} />
     </Routes>
   )
 }
