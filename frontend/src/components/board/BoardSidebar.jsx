@@ -12,6 +12,14 @@ import pipe     from "../../assets/classic/weapons/pipe.png";
 import revolver from "../../assets/classic/weapons/revolver.png";
 import rope     from "../../assets/classic/weapons/suicide.png";
 import wrench   from "../../assets/classic/weapons/wrench.png";
+import study from "../../assets/classic/rooms/study.png";
+import conservatory from "../../assets/classic/rooms/conservatory.png";
+import dinning from "../../assets/classic/rooms/dinning-room.png";
+import hall from "../../assets/classic/rooms/hallway.png";
+import kitchen from "../../assets/classic/rooms/kitchen.png";
+import library from "../../assets/classic/rooms/library.png";
+import lounge from "../../assets/classic/rooms/lounge.png";
+import ball from "../../assets/classic/rooms/ball-room.png";
 
 const CHARACTERS = [
   { name: "Miss Scarlett",   img: scarlett },
@@ -32,9 +40,14 @@ const WEAPONS = [
 ];
 
 const ROOMS_LIST = [
-  "Study", "Hall", "Lounge", "Library",
-  "Dining Room", "Conservatory", "Ballroom",
-  "Kitchen", "Accusation Room",
+    {name:"Study", img: study    },
+    {name:"Hall", img: hall      },
+    {name:"Lounge",img: lounge   },
+    {name:"Library", img: library   },{
+    name:"Dining Room", img: dinning    },
+    {name:"Conservatory", img: conservatory },
+    {name:"Ballroom", img: ball     },
+    {name:"Kitchen", img: kitchen   },
 ];
 
 // Status cycles: null → confirmed (✓) → denied (✗) → null
