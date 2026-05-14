@@ -6,8 +6,8 @@ export default function RegisteredRoute() {
 
   if (loading) return null
 
-  if (!user) return <Navigate to="/" replace />
-  if (user.isGuest) return <Navigate to="/game" replace />
+  if (!user)    return <Navigate to="/unauthorized" replace />
+  if (user.isGuest) return <Navigate to="/unauthorized" replace />
 
   return <Outlet />
 }
