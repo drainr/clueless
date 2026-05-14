@@ -1,4 +1,5 @@
-require("dotenv").config({ path: "../.env" });
+const path = require("path");
+require("dotenv").config({ path: path.join(__dirname, ".env") });
 const express = require("express");
 const http = require("http");
 const { Server } = require("socket.io");
@@ -19,6 +20,7 @@ app.use("/api/auth",  require("./routes/authRoutes"));
 app.use("/api/game",  require("./routes/gameRoutes"));
 app.use("/api/rooms", require("./routes/roomRoutes"));
 app.use("/api/user",  require("./routes/userRoutes"));
+app.use("/api/friends", require("./routes/friendRoutes"));
 
 registerGameSockets(io);
 

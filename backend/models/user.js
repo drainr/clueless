@@ -52,6 +52,13 @@ const UserSchema = new Schema(
       correctGuesses: { type: Number, default: 0 },
     },
 
+    friends: [{ type: Schema.Types.ObjectId, ref: 'User', default: [] }],
+    friendRequests: [{
+      from:     { type: Schema.Types.ObjectId, ref: 'User' },
+      username: { type: String },
+      sentAt:   { type: Date, default: Date.now },
+    }],
+
     avatarUrl: { type: String, default: null },
 
     // Soft-delete / ban support for admin use

@@ -41,4 +41,14 @@ export const gameAPI = {
   getByRoomCode: (roomCode) => api.get(`/rooms/${roomCode}`),
 }
 
+export const friendAPI = {
+  getFriends:     ()                        => api.get('/friends'),
+  getRequests:    ()                        => api.get('/friends/requests'),
+  sendRequest:    (username)                => api.post(`/friends/request/${username}`),
+  acceptRequest:  (userId)                  => api.post(`/friends/accept/${userId}`),
+  declineRequest: (userId)                  => api.post(`/friends/decline/${userId}`),
+  removeFriend:   (userId)                  => api.delete(`/friends/${userId}`),
+  sendInviteEmail:(friendId, roomCode)      => api.post('/friends/invite-email', { friendId, roomCode }),
+}
+
 export default api;
