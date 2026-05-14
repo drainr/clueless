@@ -53,7 +53,7 @@ function NotepadCard({ item, status, onToggle, myHand = [] }) {
       style={{
         background: status === 'confirmed' ? '#d4edda' : status === 'denied' ? '#f8d7da' : '#fff',
         border: `1px solid ${status === 'confirmed' ? '#9CAF88' : status === 'denied' ? '#A44A3F' : '#d8c6b4'}`,
-        opacity: inHand ? 0.5 : 1,
+        // opacity: inHand ? 0.5 : 1,
         position: 'relative',
       }}
       title={inHand ? 'In your hand' : 'Click to mark'}
@@ -83,14 +83,17 @@ function NotepadCard({ item, status, onToggle, myHand = [] }) {
   );
 }
 
-export default function BoardSidebar({ myHand = [] }) {
+export default function BoardSidebar({
+  myHand = [],
+  charStatus,
+  weaponStatus,
+  roomStatus,
+  setCharStatus,
+  setWeaponStatus,
+  setRoomStatus,
+}) {
   const [sidebarWidth, setSidebarWidth] = useState(280);
-
-  // Notepad state — persists for the whole game
-  const [charStatus,   setCharStatus]   = useState({});
-  const [weaponStatus, setWeaponStatus] = useState({});
-  const [roomStatus,   setRoomStatus]   = useState({});
-
+  
   const toggleChar   = (name) => setCharStatus((p)   => ({ ...p, [name]: cycleStatus(p[name] ?? null) }));
   const toggleWeapon = (name) => setWeaponStatus((p) => ({ ...p, [name]: cycleStatus(p[name] ?? null) }));
   const toggleRoom   = (name) => setRoomStatus((p)   => ({ ...p, [name]: cycleStatus(p[name] ?? null) }));
