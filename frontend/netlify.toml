@@ -10,4 +10,5 @@
 
 [env.production]
   [env.production.context.production.environment]
-    VITE_API_URL = "https://clueless-eira.onrender.com"
+    VITE_API_URL = "https://clueless-eira.onrender.com/api"
+    VITE_SOCKET_URL = "https://clueless-eira.onrender.com"
