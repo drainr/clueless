@@ -12,7 +12,7 @@ Our MVP includes a simple board game (similar to Clue or Murdoku) where users ca
 
 ---
 ## Live Link: 
-- 
+- https://cluelessgame.netlify.app/
 ---
 ## Team
 
