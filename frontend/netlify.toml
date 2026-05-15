@@ -8,6 +8,6 @@
   status = 200
   force = true
 
-[env.production]
-  [env.production.context.production.environment]
-    VITE_API_URL = "https://clueless-eira.onrender.com"
+[context.production.environment]
+  VITE_API_URL = "https://clueless-eira.onrender.com/api"
+  VITE_SOCKET_URL = "https://clueless-eira.onrender.com"
