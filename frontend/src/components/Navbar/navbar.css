@@ -23,12 +23,6 @@
     text-align: left;
 }
 
-.clueless-logo {
-    height: 40px;
-    width: 40px;
-    object-fit: contain;
-}
-
 .clueless-brand h1 {
     margin: 0;
     font-size: 20px;
@@ -85,7 +79,7 @@
     z-index: 2;
 }
 .clueless-logo {
-    height: 90px;
+    height: 55px;
     width: auto;
     object-fit: contain;
     display: block;
