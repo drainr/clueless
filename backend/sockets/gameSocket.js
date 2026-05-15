@@ -4,7 +4,7 @@
  */
 const Room = require("../models/room");
 const Game = require("../models/game");
-const { characters, weapons, rooms } = require("../gameMechanics/Deck/deck");
+const { characters, weapons, rooms } = require("../gameMechanics/deck/deck");
 const { selectMurderCards } = require("../gameMechanics/Deck/Killercards");
 const { dealPlayerHands } = require("../gameMechanics/Deck/DealHand");
 const PlayerMovement = require("../gameMechanics/PlayerState/playerMovement");
