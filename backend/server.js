@@ -9,8 +9,14 @@ const registerGameSockets = require("./sockets/gameSocket");
 
 const app = express();
 const server = http.createServer(app);
+const allowedOrigins = [
+  'http://localhost:5173',
+  'https://cluelessgame.netlify.app',
+  process.env.FRONTEND_URL
+].filter(Boolean);
+
 const io = new Server(server, {
-  cors: { origin: "http://localhost:5173 || https://clueless-eira.onrender.com", methods: ["GET", "POST"] }
+  cors: { origin: allowedOrigins, methods: ["GET", "POST"] }
 });
 
 app.use(cors());

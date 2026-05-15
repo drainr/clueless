@@ -12,7 +12,8 @@ export function SocketProvider({ children }) {
   useEffect(() => {
     if (!user) return
 
-    const s = io('http://localhost:3005', {
+    const socketUrl = import.meta.env.VITE_SOCKET_URL || 'http://localhost:3005'
+    const s = io(socketUrl, {
       auth: { token: localStorage.getItem('authToken') }
     })
 
