@@ -3,7 +3,7 @@ const assert = require('node:assert/strict');
 
 const Players = require('../gameMechanics/Gameloop/playercards');
 const TurnSystem = require('../gameMechanics/Gameloop/TurnSystem');
-const deck = require('../gameMechanics/Deck/deck');
+const deck = require('../gameMechanics/deck/deck');
 describe('gameloop test', () => {
   // this checks for fewer than 3 players
   test('number of players should not be fewer than 3', () => {

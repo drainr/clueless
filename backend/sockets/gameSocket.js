@@ -5,8 +5,8 @@
 const Room = require("../models/room");
 const Game = require("../models/game");
 const { characters, weapons, rooms } = require("../gameMechanics/deck/deck");
-const { selectMurderCards } = require("../gameMechanics/Deck/Killercards");
-const { dealPlayerHands } = require("../gameMechanics/Deck/DealHand");
+const { selectMurderCards } = require("../gameMechanics/deck/Killercards");
+const { dealPlayerHands } = require("../gameMechanics/deck/DealHand");
 const PlayerMovement = require("../gameMechanics/PlayerState/playerMovement");
 
 // ── helpers ──────────────────────────────────────────────────────────────────
