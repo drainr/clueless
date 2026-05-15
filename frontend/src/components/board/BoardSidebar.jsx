@@ -156,8 +156,8 @@ export default function BoardSidebar({
       <h3 className="text-base font-extrabold mb-2 font-cormorant" style={{ color: "#7A5C46" }}>Rooms</h3>
       <div className="grid grid-cols-2 gap-1">
         {ROOMS_LIST.map((r) => (
-          <NotepadCard key={r} item={r} status={roomStatus[r] ?? null}
-            onToggle={() => toggleRoom(r)} myHand={myHand} />
+          <NotepadCard key={r.name} item={r} status={roomStatus[r.name] ?? null}
+            onToggle={() => toggleRoom(r.name)} myHand={myHand} />
         ))}
       </div>
 
