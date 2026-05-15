@@ -98,6 +98,7 @@ const GameSchema = new Schema(
     // ── Event log ─────────────────────────────────────────────────────
     diceRolls: [DiceRollSchema],
     guesses:   [GuessSchema],
+    reachableTiles: { type: Array, default: [] },
 
     // ── Board state ────────────────────────────────────────────────────
     // Map grid layout — for MVP a single fixed map is fine.
@@ -112,6 +113,7 @@ const GameSchema = new Schema(
     },
     winnerId:    { type: String, default: null },   // displayName of winner
     finishedAt:  { type: Date, default: null },
+    
   },
   { timestamps: true }
 );

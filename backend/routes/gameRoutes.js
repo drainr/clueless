@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { protect } = require('../middleware/authMiddleware');
-const gridLayout = require('../gameMechanics/Deck/grid/boardLayout.json');
+const gridLayout = require('../gameMechanics/deck/grid/boardLayout.json');
 const TestCharacter = require('../gameMechanics/PlayerState/testcharacter');
 
 // Store test character in memory for this session

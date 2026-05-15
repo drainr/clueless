@@ -2,7 +2,7 @@
 // It can accept chosen character names, assigns spawn positions, and then passes the players into the deal-hand helper.
 // Use this when you want a ready-to-play player setup instead of creating players manually.
 
-const { dealPlayerHands } = require('../Deck/DealHand');
+const { dealPlayerHands } = require('../deck/DealHand');
 
 function getChosenCharacter(choice, fallbackName) {
   if (typeof choice === 'string' && choice.trim()) {
