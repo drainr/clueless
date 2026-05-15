@@ -4,6 +4,9 @@ import { useAuth } from "../hooks/useAuth";
 import { roomAPI } from "../utils/api";
 import { useSocket } from "../hooks/useSocket";
 import Cards from "../components/Cards";
+import og from "../assets/og-board.png";
+import jungle from "../assets/classic/boards/jungle-board.png";
+import underwater from "../assets/classic/boards/underwater-board.png";
 
 export default function Boards() {
   const { user } = useAuth();
@@ -39,6 +42,25 @@ export default function Boards() {
       setLoading(false);
     }
   };
+    const boards = [
+        {
+            title: "OG Mansion",
+            subtitle: "Step into the iconic estate where every room hides a clue and every guest is suspicious.",
+            image: og,
+        },
+        {
+            title: "Sunken Secrets",
+            subtitle:
+                "Explore the depths of the underwater mansion and uncover the killer hidden beneath the waves.",
+            image: underwater,
+        },
+        {
+            title: "Jungle Mystery",
+            subtitle:
+                "Venture through ancient ruins and tangled vines to expose the culprit lurking within.",
+            image: jungle,
+        },
+    ];
 
   return (
     <div className="m-5">
@@ -120,7 +142,16 @@ export default function Boards() {
         </p>
       )}
 
-      <Cards />
+        <div className="flex flex-wrap gap-8">
+            {boards.map((board) => (
+                <Cards
+                    key={board.title}
+                    title={board.title}
+                    subtitle={board.subtitle}
+                    image={board.image}
+                />
+            ))}
+        </div>
     </div>
   );
 }
