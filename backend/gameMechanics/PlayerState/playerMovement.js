@@ -1,5 +1,5 @@
 // Player movement system for grid-based movement with dice rolls
-const grid = require('../Deck/grid/grid');
+const grid = require('../deck/grid/grid');
 
 class PlayerMovement {
   constructor(playerPosition = { row: 7, col: 7 }) {
