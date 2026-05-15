@@ -4,7 +4,7 @@ import { useAuth } from "../hooks/useAuth";
 import { roomAPI } from "../utils/api";
 import { useSocket } from "../hooks/useSocket";
 import Cards from "../components/Cards";
-import og from "../assets/og-board.png";
+import og from "../assets/classic/boards/og-board.png";
 import jungle from "../assets/classic/boards/jungle-board.png";
 import underwater from "../assets/classic/boards/underwater-board.png";
 
