@@ -8,7 +8,7 @@ Our MVP includes a simple board game (similar to Clue or Murdoku) where users ca
 
 ---
 ## Trailer
-- 
+- https://youtu.be/C-HOPg76fZ4
 
 ---
 ## Live Link: 
