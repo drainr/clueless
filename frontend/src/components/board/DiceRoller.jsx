@@ -29,17 +29,21 @@ export default function DiceRoller({ isMyTurn, turnPhase, onRolled }) {
     setRolling(true);
     setResult(null);
 
-    // Listen for the server's response
-    socket.once("dice_rolled", ({ die1, die2, roll, reachableTiles }) => {
+    // Create a one-time handler for this specific roll
+    const handleDiceRolled = ({ die1, die2, roll, reachableTiles }) => {
       console.log('DiceRoller got dice_rolled:', roll, 'tiles:', reachableTiles?.length)
+      // Remove listener immediately to prevent duplicates
+      socket.off("dice_rolled", handleDiceRolled);
+      
       setTimeout(() => {
         setResult(die1 + die2);
         setRolling(false);
         if (onRolled) onRolled({ die1, die2, roll, reachableTiles });
         setTimeout(() => setShowOverlay(false), 800);
       }, 1200);
-    });
+    };
 
+    socket.once("dice_rolled", handleDiceRolled);
     socket.emit("roll_dice", { roomCode });
   }
 

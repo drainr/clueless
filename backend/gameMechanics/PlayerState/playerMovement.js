@@ -107,7 +107,7 @@ class PlayerMovement {
         ) continue;
 
         const tile = this.board[newRow][newCol];
-        // Allow moving into hallways, doors, and room tiles (walkable)
+        // Allow moving into hallways and doors, but not room tiles (only reachable from within)
         if (tile.type === 'hallway') {
           visited.add(key);
           reachable.push({ row: newRow, col: newCol });
@@ -118,7 +118,9 @@ class PlayerMovement {
           queue.push({ row: newRow, col: newCol, distance: current.distance + 1 });
         } else if (tile.type === 'room') {
           visited.add(key);
-          }
+          // Don't add room tiles to reachable unless starting from a room
+          // This prevents free movement through room interiors
+        }
         }
     }
     return reachable;

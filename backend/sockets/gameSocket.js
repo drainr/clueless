@@ -4,6 +4,7 @@
  */
 const Room = require("../models/room");
 const Game = require("../models/game");
+const User = require("../models/user");
 const { characters, weapons, rooms } = require("../gameMechanics/deck/deck");
 const { selectMurderCards } = require("../gameMechanics/deck/Killercards");
 const { dealPlayerHands } = require("../gameMechanics/deck/DealHand");
@@ -125,10 +126,10 @@ module.exports = (io) => {
 
         // Assign spawn positions — spread players around the board
         const spawnPositions = [
-          { row: 4, col: 2 },
-          { row: 4, col: 12 },
-          { row: 10, col: 2 },
-          { row: 10, col: 12 },
+          { row: 0, col: 4 },
+          { row: 14, col: 4 },
+          { row: 4, col: 14 },
+          { row: 8, col: 14 },
         ];
 
         const gamePlayers = dealtPlayers.map((p, i) => ({
@@ -221,10 +222,10 @@ module.exports = (io) => {
           return socket.emit("error", { message: "Not time to roll" });
         }
 
-        // Roll dice
+        // Roll only 1 die to make games last longer
         const die1 = Math.ceil(Math.random() * 6);
-        const die2 = Math.ceil(Math.random() * 6);
-        const roll = die1 + die2;
+        const die2 = 0; // Only 1 die rolled
+        const roll = die1;
 
         // Get reachable tiles using PlayerMovement
         const movement = getPlayerMovement(currentPlayer.position);
@@ -278,9 +279,16 @@ module.exports = (io) => {
 
         const movement = getPlayerMovement(currentPlayer.position);
         let targetTile = movement.board[row][col];
+        const currentTile = movement.board[currentPlayer.position.row][currentPlayer.position.col];
         let finalRow = row;
         let finalCol = col;
 
+        // If clicking on a door tile while already in that room, prevent re-entry
+        if (targetTile.type === 'door' && currentTile.type === 'room' && currentTile.room === targetTile.room) {
+          return socket.emit("error", { message: "You're already in this room. Choose a different tile." });
+        }
+
+        // Auto-teleport through door into the room
         if (targetTile.type === 'door') {
           const directions = [
             { row: -1, col: 0 },
@@ -535,6 +543,32 @@ module.exports = (io) => {
             finishedAt: new Date(),
           });
           await Room.findByIdAndUpdate(room._id, { status: "finished" });
+
+          // Update winner's stats
+          const winnerUser = await User.findOne({ username: currentPlayer.displayName });
+          if (winnerUser) {
+            await User.findByIdAndUpdate(winnerUser._id, {
+              $inc: {
+                'stats.gamesWon': 1,
+                'stats.gamesPlayed': 1,
+              },
+            });
+          }
+
+          // Update all players' gamesPlayed stat
+          for (const player of game.players) {
+            if (player.displayName !== currentPlayer.displayName) {
+              const playerUser = await User.findOne({ username: player.displayName });
+              if (playerUser) {
+                await User.findByIdAndUpdate(playerUser._id, {
+                  $inc: {
+                    'stats.gamesPlayed': 1,
+                    'stats.gamesLost': 1,
+                  },
+                });
+              }
+            }
+          }
 
           io.to(roomCode).emit("game_over", {
             winner: currentPlayer.displayName,

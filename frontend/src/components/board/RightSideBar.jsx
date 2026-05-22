@@ -7,7 +7,7 @@ const WEAPONS = ["Candlestick", "Knife", "Lead Pipe", "Revolver", "Rope", "Wrenc
 export default function RightSideBar({
   onLeave, onEndTurn, onSuggestion, onAccusation,
   players = [], myHand = [], myCharacter,
-  isMyTurn, turnPhase, inRoom,
+  isMyTurn, turnPhase, inRoom, currentTurnIndex = 0,
 }) {
   const [showSuggest, setShowSuggest] = useState(false);
   const [showAccuse, setShowAccuse] = useState(false);
@@ -63,7 +63,7 @@ export default function RightSideBar({
                   : turnPhase === 'action' ? '🔎 Interrogate or end turn'
                     : turnPhase === 'end_turn' ? '✅ End your turn'
                       : 'Your turn'
-              : `Waiting for ${players[0]?.displayName ?? '...'}`}
+              : `Waiting on ${players[currentTurnIndex]?.displayName ?? 'next player'}`}
           </div>
 
           <div className="space-y-3">

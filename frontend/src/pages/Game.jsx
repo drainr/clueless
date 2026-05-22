@@ -55,7 +55,7 @@ export default function Game() {
             isHost: p.isHost,
             isEliminated: false,
             isActive: p.isActive,
-            position: { row: 7, col: 7 },
+            position: null, // Don't set positions here - let game_state be the authority
           })))
         }
       } catch (err) {
@@ -65,10 +65,19 @@ export default function Game() {
     load()
   }, [roomCode])
 
-  // Request game state from server on mount
+  // Request game state from server on mount and whenever roomCode changes
   useEffect(() => {
     if (!socket || !roomCode) return
+    
+    // Request game state immediately
     socket.emit('get_game_state', { roomCode })
+    
+    // Also request it after a short delay to handle any timing issues
+    const timer = setTimeout(() => {
+      socket.emit('get_game_state', { roomCode })
+    }, 500)
+    
+    return () => clearTimeout(timer)
   }, [socket, roomCode])
 
   // Socket event listeners
@@ -76,7 +85,16 @@ export default function Game() {
     if (!socket) return
 
     socket.on('game_state', ({ gameId, players, turnPhase, currentTurnIndex }) => {
-      setPlayers(players)
+      // Ensure positions are properly set from game state
+      const updatedPlayers = players.map(p => ({
+        displayName: p.displayName,
+        character: p.character,
+        isHost: p.isHost,
+        isEliminated: p.isEliminated,
+        isActive: p.isActive,
+        position: p.position ?? { row: 7, col: 7 }, // Use position from server, fallback to center
+      }));
+      setPlayers(updatedPlayers);
       setTurnPhase(turnPhase)
       setCurrentTurnIndex(currentTurnIndex)
     })
@@ -253,6 +271,7 @@ export default function Game() {
         isMyTurn={isMyTurn}
         turnPhase={turnPhase}
         inRoom={inRoom}
+        currentTurnIndex={currentTurnIndex}
       />
     </div>
   )
