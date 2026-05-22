@@ -337,6 +337,10 @@ Fonts:
 
 ---
 
+# UML
+![img.png](img.png) (ctrl + mouse click)
+ ![uml.png](frontend/src/assets/uml.png)(uml.png)
+
 # Key Design Decisions
 
 ### Backend Strategy (Full MERN)
